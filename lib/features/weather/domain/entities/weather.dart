@@ -1,9 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class Weather extends Equatable {
+  ///	Returns the temperature in the selected unit. (Default: Celsius)
   final int temperature;
+
+  /// Returns the universal weather condition code associated with the current weather condition. You can download all available weather codes using this link: Download Weather Codes (ZIP file)
+  ///
+  /// @Link [https://weatherstack.com/site_resources/weatherstack-weather-condition-codes.zip]
+
   final int weatherCode;
+
+  /// Returns one or more PNG weather icons associated with the current weather condition.
   final List<String> weatherIcons;
+
+  ///Returns one or more weather description texts associated with the current weather condition.
   final List<String> weatherDescriptions;
   final int? windSpeed;
   final int? windDegree;
