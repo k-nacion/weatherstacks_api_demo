@@ -43,6 +43,7 @@ dependencies:
   flutter_riverpod: ^2.0.1
   http: ^0.13.5
   envied: ^0.2.3
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
