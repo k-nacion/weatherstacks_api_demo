@@ -10,5 +10,5 @@ class GetCurrentWeatherUseCase {
     required WeatherRepository repository,
   }) : _repository = repository;
 
-  Future<Either<Failure, Weather>> call() async => await _repository.getCurrentWeather();
+  Future<Either<Failure, Weather>> call(String location) async => await _repository.getCurrentWeather(location);
 }
