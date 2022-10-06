@@ -21,7 +21,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   @override
   Future<Either<Failure, Weather>> getCurrentWeather(String location) async {
-    _networkInfo.hasInternetConnection;
+    // _networkInfo.hasInternetConnection;
     final currentWeather = await _remoteDataSource.getCurrentWeather(location);
 
     return Right(currentWeather);

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weatherstacks_api_demo/core/network/network_info.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_local_data_source.dart';
@@ -89,7 +90,7 @@ void main() {
 
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
-            expect(actual, tWeatherSuccess);
+            expect(actual, Right(tWeatherSuccess));
             expect(await mockNetworkInfo.hasInternetConnection, true);
             verify(() => mockNetworkInfo.hasInternetConnection);
             verify(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation));
