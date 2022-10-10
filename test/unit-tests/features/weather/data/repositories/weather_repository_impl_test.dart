@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:weatherstacks_api_demo/core/network/network_info.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/data_source/network_info.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_local_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_remote_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
@@ -39,7 +39,7 @@ void main() {
     group('getCurrentWeather', () {
       void runOnline(void Function() body) {
         setUp(() {
-          when(() => mockNetworkInfo.hasInternetConnection).thenAnswer((_) async => true);
+          when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => true);
         });
 
         body();
@@ -47,7 +47,7 @@ void main() {
 
       void runOffline(void Function() body) {
         setUp(() {
-          when(() => mockNetworkInfo.hasInternetConnection).thenAnswer((_) async => false);
+          when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => false);
         });
 
         body();
@@ -78,8 +78,8 @@ void main() {
 
             await sut.getCurrentWeather(tWeatherLocation);
 
-            expect(await mockNetworkInfo.hasInternetConnection, true);
-            verify(() => mockNetworkInfo.hasInternetConnection).called(1);
+            expect(await mockNetworkInfo.hasInternet, true);
+            verify(() => mockNetworkInfo.hasInternet).called(1);
           },
         );
 
@@ -91,8 +91,8 @@ void main() {
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
             expect(actual, Right(tWeatherSuccess));
-            expect(await mockNetworkInfo.hasInternetConnection, true);
-            verify(() => mockNetworkInfo.hasInternetConnection);
+            expect(await mockNetworkInfo.hasInternet, true);
+            verify(() => mockNetworkInfo.hasInternet);
             verify(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation));
           },
         );
