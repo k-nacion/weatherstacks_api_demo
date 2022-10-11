@@ -1,5 +1,5 @@
-import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
 
 abstract class WeatherRemoteDataSource {
-  Future<Weather> getCurrentWeather(String location);
+  Future<WeatherModel> getCurrentWeather(String location);
 }
