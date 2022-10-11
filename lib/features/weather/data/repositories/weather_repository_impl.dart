@@ -1,4 +1,5 @@
 import 'package:fpdart/src/either.dart';
+import 'package:weatherstacks_api_demo/error/exceptions.dart';
 import 'package:weatherstacks_api_demo/error/failures.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_local_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_remote_data_source.dart';
@@ -22,9 +23,18 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   @override
   Future<Either<Failure, Weather>> getCurrentWeather(String location) async {
-    // _networkInfo.hasInternetConnection;
-    final currentWeather = await _remoteDataSource.getCurrentWeather(location);
+    try {
+      if (!await _networkInfo.hasInternet) {
+        return Right(await _localDataSource.getLastCachedWeatherData());
+      }
 
-    return Right(currentWeather);
+      final currentWeather = await _remoteDataSource.getCurrentWeather(location);
+      _localDataSource.cacheWeather(currentWeather);
+      return Right(currentWeather);
+    } on ServerUnreachableException {
+      return Left(ServerUnreachableFailure());
+    } on CacheException {
+      return Left(CacheFailure());
+    }
   }
 }
