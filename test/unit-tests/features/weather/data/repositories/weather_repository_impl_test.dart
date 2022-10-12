@@ -10,7 +10,6 @@ import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_remote_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/repositories/weather_repository_impl.dart';
-import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather.dart';
 
 import '../../../../../fixture/fixture.dart';
 
@@ -61,27 +60,17 @@ void main() {
 
       const tWeatherLocation = 'Taguig';
 
-      const tWeather = Weather(
-          temperature: 13,
-          weatherCode: 113,
-          weatherIcons: ['https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'],
-          weatherDescriptions: ['Sunny'],
-          windSpeed: 0,
-          windDegree: 349,
-          windDirection: 'N',
-          pressure: 1010,
-          precip: 0,
-          humidity: 90,
-          cloudCover: 0);
-
-      final tWeatherSuccess = WeatherModel.fromMap(jsonDecode(fixture('current_weather_success_response.json'))['current']);
+      final tWeatherSuccess = WeatherModel.fromMap(
+          jsonDecode(fixture('current_weather_success_response.json'))['current']);
 
       runOnline(() {
         test(
           'should check if the device is online',
           () async {
-            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation)).thenAnswer((_) async => tWeatherSuccess);
-            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess)).thenAnswer((_) async {});
+            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation))
+                .thenAnswer((_) async => tWeatherSuccess);
+            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess))
+                .thenAnswer((_) async {});
 
             await sut.getCurrentWeather(tWeatherLocation);
 
@@ -92,8 +81,10 @@ void main() {
         test(
           'should fetch weather data successfully.',
           () async {
-            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation)).thenAnswer((_) async => tWeatherSuccess);
-            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess)).thenAnswer((_) async {});
+            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation))
+                .thenAnswer((_) async => tWeatherSuccess);
+            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess))
+                .thenAnswer((_) async {});
 
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
@@ -107,7 +98,8 @@ void main() {
         test(
           'remote data source should throw an ServerUnreachableException',
           () async {
-            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation)).thenThrow(ServerUnreachableException());
+            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation))
+                .thenThrow(ServerUnreachableException());
 
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
@@ -120,8 +112,10 @@ void main() {
         test(
           'should cache the raw data before returning the value.',
           () async {
-            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation)).thenAnswer((_) async => tWeatherSuccess);
-            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess)).thenAnswer((_) async {});
+            when(() => mockWeatherRemoteDataSource.getCurrentWeather(tWeatherLocation))
+                .thenAnswer((_) async => tWeatherSuccess);
+            when(() => mockWeatherLocalDataSource.cacheWeather(tWeatherSuccess))
+                .thenAnswer((_) async {});
 
             await sut.getCurrentWeather(tWeatherLocation);
 
@@ -133,17 +127,18 @@ void main() {
       });
 
       runOffline(() {
-        test('should prove that this test group is running offline.', () async {
+        /*       test('should prove that this test group is running offline.', () async {
           await sut.getCurrentWeather(tWeatherLocation);
 
           verify(() => mockNetworkInfo.hasInternet).called(1);
           expect(await mockNetworkInfo.hasInternet, false);
-        }, skip: true);
+        }, skip: true);*/
 
         test(
           'should return the last cached weather if the device is offline',
           () async {
-            when(() => mockWeatherLocalDataSource.getLastCachedWeatherData()).thenAnswer((_) async => tWeatherSuccess);
+            when(() => mockWeatherLocalDataSource.getLastCachedWeatherData())
+                .thenAnswer((_) async => tWeatherSuccess);
 
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
@@ -154,7 +149,8 @@ void main() {
         test(
           'should return CacheFailure when unable to get cached data.',
           () async {
-            when(() => mockWeatherLocalDataSource.getLastCachedWeatherData()).thenThrow(CacheException());
+            when(() => mockWeatherLocalDataSource.getLastCachedWeatherData())
+                .thenThrow(CacheException());
 
             final actual = await sut.getCurrentWeather(tWeatherLocation);
 
