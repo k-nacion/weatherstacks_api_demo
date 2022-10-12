@@ -1,5 +1,4 @@
 # Miscellaneous
-*.env
 *.class
 *.log
 *.pyc
@@ -45,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 # Environment Files
-.env
+.private.env
