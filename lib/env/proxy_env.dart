@@ -1,10 +1,13 @@
-import 'package:envied/envied.dart';
 import 'package:weatherstacks_api_demo/env/private_env.dart';
 
-part 'public_env.g.dart';
+part 'proxy_env.g.dart';
 
+/*
 @Envied(requireEnvFile: true, path: '.env')
-abstract class PublicEnv {
+*/
+abstract class ProxyEnv {
+/*
   @EnviedField(varName: 'WEATHER_STACK_BASE_URL')
-  static final weatherStackBaseUrl = _PublicEnv.weatherStackBaseUrl;
+*/
+  static final weatherStackBaseUrl = _ProxyEnv.weatherStackBaseUrl;
 }
