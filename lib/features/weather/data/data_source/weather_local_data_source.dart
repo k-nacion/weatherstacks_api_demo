@@ -9,6 +9,7 @@ const weatherDataKey = 'WEATHER_DATA_KEY';
 
 abstract class WeatherLocalDataSource {
   Future<void> cacheWeather(WeatherModel weatherModel);
+
   Future<WeatherModel> getLastCachedWeatherData();
 }
 
@@ -29,7 +30,15 @@ class WeatherLocalDataSourceImpl implements WeatherLocalDataSource {
 
   @override
   Future<WeatherModel> getLastCachedWeatherData() async {
-    // TODO: implement getLastCachedWeatherData
-    throw UnimplementedError();
+    final serializedWeatherData = _sharedPreferences.getString(Env.weatherSharedPrefKey);
+
+    if (serializedWeatherData == null || serializedWeatherData.isEmpty) {
+      throw CacheException();
+    }
+
+    final deserializedWeatherData = jsonDecode(serializedWeatherData);
+    final weatherModel = WeatherModel.fromMap(deserializedWeatherData);
+
+    return weatherModel;
   }
 }

@@ -18,16 +18,16 @@ class WeatherModel extends Weather {
   Map<String, dynamic> toMap() {
     return {
       'temperature': super.temperature,
-      'weatherCode': super.weatherCode,
-      'weatherIcons': super.weatherIcons,
-      'weatherDescriptions': super.weatherDescriptions,
-      'windSpeed': super.windSpeed,
-      'windDegree': super.windDegree,
-      'windDirection': super.windDirection,
+      'weather_code': super.weatherCode,
+      'weather_icons': super.weatherIcons,
+      'weather_descriptions': super.weatherDescriptions,
+      'wind_speed': super.windSpeed,
+      'wind_degree': super.windDegree,
+      'wind_dir': super.windDirection,
       'pressure': super.pressure,
       'precip': super.precip,
       'humidity': super.humidity,
-      'cloudCover': super.cloudCover,
+      'cloudcover': super.cloudCover,
     };
   }
 
@@ -35,8 +35,11 @@ class WeatherModel extends Weather {
     return WeatherModel(
       temperature: map['temperature'] as int,
       weatherCode: map['weather_code'] as int,
-      weatherIcons: (map['weather_icons'] as List<dynamic>).map((e) => e.toString()).toList(),
-      weatherDescriptions: (map['weather_descriptions'] as List<dynamic>).map((e) => e.toString()).toList(),
+      weatherIcons:
+          (map['weather_icons'] as List<dynamic>).map((e) => e.toString()).toList(),
+      weatherDescriptions: (map['weather_descriptions'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
       windSpeed: map['wind_speed'] as int?,
       windDegree: map['wind_degree'] as int?,
       windDirection: map['wind_dir'] as String?,
