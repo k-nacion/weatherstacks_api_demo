@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weatherstacks_api_demo/env/env.dart';
+import 'package:weatherstacks_api_demo/error/exceptions.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
 
 const weatherDataKey = 'WEATHER_DATA_KEY';
 
 abstract class WeatherLocalDataSource {
-  Future<void> cacheWeather(WeatherModel weather);
+  Future<void> cacheWeather(WeatherModel weatherModel);
   Future<WeatherModel> getLastCachedWeatherData();
 }
 
@@ -16,9 +20,11 @@ class WeatherLocalDataSourceImpl implements WeatherLocalDataSource {
   }) : _sharedPreferences = sharedPreferences;
 
   @override
-  Future<void> cacheWeather(WeatherModel weather) async {
-    // TODO: implement cacheWeather
-    throw UnimplementedError();
+  Future<void> cacheWeather(WeatherModel weatherModel) async {
+    if (!await _sharedPreferences.setString(
+        Env.weatherSharedPrefKey, jsonEncode(weatherModel.toMap()))) {
+      throw CacheException();
+    }
   }
 
   @override
