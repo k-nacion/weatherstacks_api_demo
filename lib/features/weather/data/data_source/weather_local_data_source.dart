@@ -23,14 +23,14 @@ class WeatherLocalDataSourceImpl implements WeatherLocalDataSource {
   @override
   Future<void> cacheWeather(WeatherModel weatherModel) async {
     if (!await _sharedPreferences.setString(
-        Env.weatherSharedPrefKey, jsonEncode(weatherModel.toMap()))) {
+        Env.WEATHER_SHARED_PREF_KEY, jsonEncode(weatherModel.toMap()))) {
       throw CacheException();
     }
   }
 
   @override
   Future<WeatherModel> getLastCachedWeatherData() async {
-    final serializedWeatherData = _sharedPreferences.getString(Env.weatherSharedPrefKey);
+    final serializedWeatherData = _sharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY);
 
     if (serializedWeatherData == null || serializedWeatherData.isEmpty) {
       throw CacheException();
