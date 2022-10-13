@@ -7,5 +7,11 @@ part of 'env.dart';
 // **************************************************************************
 
 class _Env {
-  static const weatherSharedPrefKey = 'WEATHER_SHARED_PREF_KEY';
+  static const WEATHER_STACK_BASE_URL = 'http://api.weatherstack.com';
+  static const WEATHER_STACK_BASE_URL_UNENCODED_PATH = 'current';
+  static const WEATHER_STACK_BASE_URL_ACESS_KEY_QUERY = 'access_key';
+  static const WEATHER_STACK_BASE_URL_QUERY_QUERY = 'query';
+  static const WEATHER_SHARED_PREF_KEY = 'WEATHER_SHARED_PREF_KEY';
+  static const SUCCESS_JSON_RESPONSE = 'current_weather_success_response.json';
+  static const WEATHER_URI_HEADER = '{"Content-Type": "application/json"}';
 }
