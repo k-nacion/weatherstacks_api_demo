@@ -31,33 +31,33 @@ void main() {
       test(
         'should cache the data in the shared preferences package and be successful.',
         () async {
-          when(() => mockSharedPreferences.setString(
-                  Env.weatherSharedPrefKey, tSerializedWeather))
+          when(() =>
+                  mockSharedPreferences.setString(Env.WEATHER_SHARED_PREF_KEY, tSerializedWeather))
               .thenAnswer((_) async => true);
 
           await sut.cacheWeather(tWeatherModel);
 
           expect(
               await mockSharedPreferences.setString(
-                  Env.weatherSharedPrefKey, tSerializedWeather),
+                  Env.WEATHER_SHARED_PREF_KEY, tSerializedWeather),
               true);
-          verify(() => mockSharedPreferences.setString(
-              Env.weatherSharedPrefKey, tSerializedWeather));
+          verify(() =>
+              mockSharedPreferences.setString(Env.WEATHER_SHARED_PREF_KEY, tSerializedWeather));
         },
       );
 
       test(
         'should be unable to cache the data in shared preferences package and throw an error',
         () async {
-          when(() => mockSharedPreferences.setString(
-                  Env.weatherSharedPrefKey, tSerializedWeather))
+          when(() =>
+                  mockSharedPreferences.setString(Env.WEATHER_SHARED_PREF_KEY, tSerializedWeather))
               .thenAnswer((_) async => false);
 
           void functionToTest() async => await sut.cacheWeather(tWeatherModel);
 
           expect(
               await mockSharedPreferences.setString(
-                  Env.weatherSharedPrefKey, tSerializedWeather),
+                  Env.WEATHER_SHARED_PREF_KEY, tSerializedWeather),
               false);
           expect(functionToTest, throwsA(isA<CacheException>()));
         },
@@ -68,34 +68,32 @@ void main() {
       test(
         'should be able to get the last cached weather data successfully. ',
         () async {
-          when(() => mockSharedPreferences.getString(Env.weatherSharedPrefKey))
+          when(() => mockSharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY))
               .thenReturn(tSerializedWeather);
 
           final actual = await sut.getLastCachedWeatherData();
 
           expect(actual, tWeatherModel);
-          verify(() => mockSharedPreferences.getString(Env.weatherSharedPrefKey));
+          verify(() => mockSharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY));
         },
       );
 
       test(
         'Should throw CacheException when cached data is null',
         () async {
-          when(() => mockSharedPreferences.getString(Env.weatherSharedPrefKey))
-              .thenReturn(null);
+          when(() => mockSharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY)).thenReturn(null);
 
           void functionToTest() async => await sut.getLastCachedWeatherData();
 
           expect(functionToTest, throwsA(isA<CacheException>()));
-          verify(() => mockSharedPreferences.getString(Env.weatherSharedPrefKey));
+          verify(() => mockSharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY));
         },
       );
 
       test(
         'should throw CacheException when cached data empty string',
         () async {
-          when(() => mockSharedPreferences.getString(Env.weatherSharedPrefKey))
-              .thenReturn('');
+          when(() => mockSharedPreferences.getString(Env.WEATHER_SHARED_PREF_KEY)).thenReturn('');
 
           void functionToTest() async => await sut.getLastCachedWeatherData();
 
