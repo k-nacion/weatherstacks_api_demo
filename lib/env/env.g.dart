@@ -7,7 +7,7 @@ part of 'env.dart';
 // **************************************************************************
 
 class _Env {
-  static const WEATHER_STACK_BASE_URL = 'http://api.weatherstack.com';
+  static const WEATHER_STACK_BASE_URL = 'api.weatherstack.com';
   static const WEATHER_STACK_BASE_URL_UNENCODED_PATH = 'current';
   static const WEATHER_STACK_BASE_URL_ACESS_KEY_QUERY = 'access_key';
   static const WEATHER_STACK_BASE_URL_QUERY_QUERY = 'query';
