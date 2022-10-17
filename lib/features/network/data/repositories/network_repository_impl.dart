@@ -15,6 +15,8 @@ class NetworkRepositoryImpl implements NetworkRepository {
   Future<Either<Failure, Network>> hasConnection() async {
     final hasInternet = await _networkDataSource.hasInternetConnection;
 
-    return hasInternet ? const Right(Network(status: true)) : const Left(NoInternetFailure(network: Network(status: false)));
+    return hasInternet
+        ? const Right(Network(status: true))
+        : const Left(NoInternetFailure(network: Network(status: false)));
   }
 }
