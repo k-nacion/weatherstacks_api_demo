@@ -38,6 +38,6 @@ final _weatherRepositoryProvider = Provider<WeatherRepository>((ref) {
   );
 });
 
-final getCurrentWeatherUseCaseProvider = Provider<GetCurrentWeatherUseCase>((ref) {
+final _getCurrentWeatherUseCaseProvider = Provider<GetCurrentWeatherUseCase>((ref) {
   return GetCurrentWeatherUseCase(repository: ref.read(_weatherRepositoryProvider));
 });
