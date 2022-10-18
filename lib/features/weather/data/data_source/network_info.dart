@@ -12,6 +12,5 @@ class NetworkInfoImpl implements NetworkInfo {
   }) : _internetConnectionChecker = internetConnectionChecker;
 
   @override
-  // TODO: implement hasInternet
   Future<bool> get hasInternet async => await _internetConnectionChecker.hasConnection;
 }
