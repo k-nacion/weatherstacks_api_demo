@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weatherstacks_api_demo/core/route/router.dart';
+import 'package:weatherstacks_api_demo/core/theme/theme.dart';
+import 'package:weatherstacks_api_demo/features/weather/weather_di.dart';
 
-void main() {
-  runApp(
-    const ProviderScope(
-      child: App(),
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await weatherDiInit();
+  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -17,6 +16,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: lightTheme,
       routerConfig: router,
     );
   }
