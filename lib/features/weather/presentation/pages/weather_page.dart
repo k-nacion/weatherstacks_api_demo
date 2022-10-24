@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherstacks_api_demo/features/weather/presentation/bloc/weather_bloc.dart';
-import 'package:weatherstacks_api_demo/features/weather/presentation/widgets/weather_body.dart';
+import 'package:weatherstacks_api_demo/features/weather/presentation/widgets/weather_app_bar.dart';
 import 'package:weatherstacks_api_demo/features/weather/weather_di.dart';
 
 class WeatherPage extends StatelessWidget {
@@ -12,11 +12,17 @@ class WeatherPage extends StatelessWidget {
     return BlocProvider<WeatherBloc>(
       create: (context) => sl<WeatherBloc>(),
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Weather Page'),
-            centerTitle: true,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: SafeArea(
+            child: Column(
+              children: const [
+                WeatherAppBar(),
+              ],
+            ),
           ),
-          body: const WeatherBody()),
+        ),
+      ),
     );
   }
 }
