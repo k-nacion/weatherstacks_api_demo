@@ -27,11 +27,11 @@ void main() {
     final tWeatherModelParsed =
         WeatherModel.fromMap(jsonDecode(fixture(Env.SUCCESS_JSON_RESPONSE))['current']);
     final tUriQueries = {
-      Env.WEATHER_STACK_BASE_URL_ACESS_KEY_QUERY: PrivateEnv.weatherStackApiKey,
+      Env.WEATHER_STACK_BASE_URL_ACCESS_KEY_QUERY: PrivateEnv.weatherStackApiKey,
       Env.WEATHER_STACK_BASE_URL_QUERY_QUERY: tWeatherLocation
     };
-    final tUri = Uri.http(Env.WEATHER_STACK_BASE_URL,
-        Env.WEATHER_STACK_BASE_URL_UNENCODED_PATH, tUriQueries);
+    final tUri = Uri.http(
+        Env.WEATHER_STACK_BASE_URL, Env.WEATHER_STACK_BASE_URL_UNENCODED_PATH, tUriQueries);
 
     group('getCurrentWeather', () {
       test(

@@ -21,10 +21,10 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
 
   @override
   Future<WeatherModel> getCurrentWeather(String location) async {
-    final baseUrl = Env.WEATHER_STACK_BASE_URL;
-    final unencodedPath = Env.WEATHER_STACK_BASE_URL_UNENCODED_PATH;
+    const baseUrl = Env.WEATHER_STACK_BASE_URL;
+    const unencodedPath = Env.WEATHER_STACK_BASE_URL_UNENCODED_PATH;
     final mapQuery = {
-      Env.WEATHER_STACK_BASE_URL_ACESS_KEY_QUERY: PrivateEnv.weatherStackApiKey,
+      Env.WEATHER_STACK_BASE_URL_ACCESS_KEY_QUERY: PrivateEnv.weatherStackApiKey,
       Env.WEATHER_STACK_BASE_URL_QUERY_QUERY: location
     };
 
