@@ -32,9 +32,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
       _localDataSource.cacheWeather(currentWeather);
       return Right(currentWeather);
     } on ServerUnreachableException {
-      return Left(ServerUnreachableFailure());
+      return const Left(ServerUnreachableFailure());
     } on CacheException {
-      return Left(CacheFailure());
+      return const Left(CacheFailure());
     }
   }
 }
