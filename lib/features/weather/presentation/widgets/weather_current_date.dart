@@ -5,16 +5,21 @@ class WeatherCurrentDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Monday',
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        Text('04 September'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Monday',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          Text('04 September', style: Theme.of(context).textTheme.headlineSmall),
+        ],
+      ),
     );
   }
 }
