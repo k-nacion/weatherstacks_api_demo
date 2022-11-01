@@ -1,5 +1,6 @@
 import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather.dart';
 
+@Deprecated('Will replace this class with WeatherModel2')
 class WeatherModel extends Weather {
   WeatherModel({
     required super.temperature,
@@ -35,11 +36,9 @@ class WeatherModel extends Weather {
     return WeatherModel(
       temperature: map['temperature'] as int,
       weatherCode: map['weather_code'] as int,
-      weatherIcons:
-          (map['weather_icons'] as List<dynamic>).map((e) => e.toString()).toList(),
-      weatherDescriptions: (map['weather_descriptions'] as List<dynamic>)
-          .map((e) => e.toString())
-          .toList(),
+      weatherIcons: (map['weather_icons'] as List<dynamic>).map((e) => e.toString()).toList(),
+      weatherDescriptions:
+          (map['weather_descriptions'] as List<dynamic>).map((e) => e.toString()).toList(),
       windSpeed: map['wind_speed'] as int?,
       windDegree: map['wind_degree'] as int?,
       windDirection: map['wind_dir'] as String?,

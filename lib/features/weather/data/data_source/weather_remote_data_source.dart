@@ -5,11 +5,16 @@ import 'package:weatherstacks_api_demo/env/env.dart';
 import 'package:weatherstacks_api_demo/env/private_env.dart';
 import 'package:weatherstacks_api_demo/error/exceptions.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model2.dart';
+import 'package:weatherstacks_api_demo/features/weather/domain/entities/coordinates.dart';
 
 const weatherUriHeader = {'content-type': 'application/json'};
 
 abstract class WeatherRemoteDataSource {
+  @Deprecated(
+      'We are transitioning to OpenWeatherApi. WeatherStack API will not be used in the future.')
   Future<WeatherModel> getCurrentWeather(String location);
+  Future<WeatherModel2> getWeatherFromOpenWeatherApi(Coordinates coordinates);
 }
 
 class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
@@ -39,5 +44,11 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
     final weatherModel = WeatherModel.fromMap(jsonDecode(response)['current']);
 
     return weatherModel;
+  }
+
+  @override
+  Future<WeatherModel2> getWeatherFromOpenWeatherApi(Coordinates coordinates) {
+    // TODO: implement getWeatherFromOpenWeatherApi
+    throw UnimplementedError();
   }
 }

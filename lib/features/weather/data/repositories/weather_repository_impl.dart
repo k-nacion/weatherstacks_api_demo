@@ -3,7 +3,9 @@ import 'package:weatherstacks_api_demo/error/exceptions.dart';
 import 'package:weatherstacks_api_demo/error/failures.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_local_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_remote_data_source.dart';
+import 'package:weatherstacks_api_demo/features/weather/domain/entities/coordinates.dart';
 import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather.dart';
+import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather2.dart';
 import 'package:weatherstacks_api_demo/features/weather/domain/repositories/weather_repository.dart';
 
 import '../data_source/network_info.dart';
@@ -21,6 +23,8 @@ class WeatherRepositoryImpl implements WeatherRepository {
         _remoteDataSource = remoteDataSource,
         _networkInfo = networkInfo;
 
+  @Deprecated(
+      'We are transitioning to OpenWeatherApi. WeatherStack API will not be used in the future.')
   @override
   Future<Either<Failure, Weather>> getCurrentWeather(String location) async {
     try {
@@ -36,5 +40,11 @@ class WeatherRepositoryImpl implements WeatherRepository {
     } on CacheException {
       return const Left(CacheFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, Weather2>> getCurrentWeatherFromOpenWeatherApi(Coordinates coordinates) {
+    // TODO: implement getCurrentWeatherFromOpenWeatherApi
+    throw UnimplementedError();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+@Deprecated('Will replace this file with Weather2 soon.')
 class Weather extends Equatable {
   ///	Returns the temperature in the selected unit. (Default: Celsius)
   final int temperature;

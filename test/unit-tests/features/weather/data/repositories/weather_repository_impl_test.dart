@@ -8,8 +8,13 @@ import 'package:weatherstacks_api_demo/error/failures.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/network_info.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_local_data_source.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/data_source/weather_remote_data_source.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/model/coordinates_model.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/model/weather_model2.dart';
+import 'package:weatherstacks_api_demo/features/weather/data/model/wind_model.dart';
 import 'package:weatherstacks_api_demo/features/weather/data/repositories/weather_repository_impl.dart';
+import 'package:weatherstacks_api_demo/features/weather/domain/entities/coordinates.dart';
+import 'package:weatherstacks_api_demo/features/weather/domain/entities/weather2.dart';
 
 import '../../../../../fixture/fixture.dart';
 
@@ -37,27 +42,27 @@ void main() {
       );
     });
 
+    void runOnline(void Function() body) {
+      group('Running ONLINE', () {
+        setUp(() {
+          when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => true);
+        });
+
+        body();
+      });
+    }
+
+    void runOffline(void Function() body) {
+      group('Running OFFLINE', () {
+        setUp(() {
+          when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => false);
+        });
+
+        body();
+      });
+    }
+
     group('getCurrentWeather', () {
-      void runOnline(void Function() body) {
-        group('Running ONLINE', () {
-          setUp(() {
-            when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => true);
-          });
-
-          body();
-        });
-      }
-
-      void runOffline(void Function() body) {
-        group('Running OFFLINE', () {
-          setUp(() {
-            when(() => mockNetworkInfo.hasInternet).thenAnswer((_) async => false);
-          });
-
-          body();
-        });
-      }
-
       const tWeatherLocation = 'Taguig';
 
       final tWeatherSuccess = WeatherModel.fromMap(
@@ -127,13 +132,6 @@ void main() {
       });
 
       runOffline(() {
-        /*       test('should prove that this test group is running offline.', () async {
-          await sut.getCurrentWeather(tWeatherLocation);
-
-          verify(() => mockNetworkInfo.hasInternet).called(1);
-          expect(await mockNetworkInfo.hasInternet, false);
-        }, skip: true);*/
-
         test(
           'should return the last cached weather if the device is offline',
           () async {
@@ -156,6 +154,51 @@ void main() {
 
             expect(actual, Left(CacheFailure()));
             expect(await mockNetworkInfo.hasInternet, false);
+          },
+        );
+      });
+    });
+
+    group('getCurrentWeatherFromOpenWeatherApi', () {
+      const tCoordinates = Coordinates(latitude: 14.93, longitude: 120.48);
+
+      final openWeatherApi = jsonDecode(fixture('openweatherapi_success.json'));
+      final parsedCoordinates = openWeatherApi['coord'];
+      final parsedWeather = openWeatherApi['weather'];
+      final parsedMain = openWeatherApi['main'];
+      final parsedWind = openWeatherApi['wind'];
+      final parsedSystem = openWeatherApi['sys'];
+
+      final tWeather2 = WeatherModel2(
+        coord: CoordinatesModel.fromJson(parsedCoordinates),
+        wind: WindModel.fromJson(parsedWind),
+        weatherId: parsedWeather['id'] as int,
+        weatherMain: parsedWeather['main'] as String,
+        weatherDescription: parsedWeather['description'] as String,
+        weatherIcon: parsedWeather['icon'] as String,
+        temp: parsedMain['temp'] as double,
+        feelsLike: parsedMain['feels_like'] as double,
+        tempMin: parsedMain['temp_min'] as double,
+        tempMax: parsedMain['temp_max'] as double,
+        pressure: parsedMain['pressure'] as int,
+        dt: openWeatherApi['dt'] as int,
+        sunriseTime: parsedSystem['sunrise'] as int,
+        sunsetTime: parsedSystem['sunset'] as int,
+      );
+
+      final Either<Failure, Weather2> tWeatherSuccess = Right(tWeather2);
+
+      runOnline(() {
+        test(
+          'should return successfully a weather2 model',
+          () async {
+            when(() => mockWeatherRemoteDataSource.getWeatherFromOpenWeatherApi(tCoordinates))
+                .thenAnswer((_) async => tWeather2);
+
+            final actual = await sut.getCurrentWeatherFromOpenWeatherApi(tCoordinates);
+
+            expect(actual, tWeatherSuccess);
+            verify(() => mockWeatherRemoteDataSource.getWeatherFromOpenWeatherApi(tCoordinates));
           },
         );
       });

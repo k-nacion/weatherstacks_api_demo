@@ -49,6 +49,8 @@ dependencies:
   get_it: ^7.2.0
   font_awesome_flutter: ^10.2.1
   flutter_bloc: ^8.1.1
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.7.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,8 @@ dev_dependencies:
   mocktail: ^0.3.0
   envied_generator: ^0.2.3
   build_runner: ^2.2.1
+  freezed: ^2.2.0
+  json_serializable: ^6.5.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
